@@ -1,9 +1,10 @@
 'use strict';
 
-var FIRSTNAME = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var SECONDNAME = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var COATCOLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var EYESCOLOR = ['black', 'red', 'blue', 'yellow', 'green'];
+var FIRST_NAME = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+var SECOND_NAME = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+var COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARDS_LENGTH = 4;
 
 var getRandomMassElement = function (mass) {
   var random = Math.floor(Math.random() * mass.length);
@@ -19,28 +20,16 @@ var similarListElement = setup.querySelector('.setup-similar-list');
 
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-var wizards = [
-  {
-    name: getRandomMassElement(FIRSTNAME) + ' ' + getRandomMassElement(SECONDNAME),
-    coatColor: getRandomMassElement(COATCOLOR),
-    eyesColor: getRandomMassElement(EYESCOLOR)
-  },
-  {
-    name: getRandomMassElement(FIRSTNAME) + ' ' + getRandomMassElement(SECONDNAME),
-    coatColor: getRandomMassElement(COATCOLOR),
-    eyesColor: getRandomMassElement(EYESCOLOR)
-  },
-  {
-    name: getRandomMassElement(FIRSTNAME) + ' ' + getRandomMassElement(SECONDNAME),
-    coatColor: getRandomMassElement(COATCOLOR),
-    eyesColor: getRandomMassElement(EYESCOLOR)
-  },
-  {
-    name: getRandomMassElement(FIRSTNAME) + ' ' + getRandomMassElement(SECONDNAME),
-    coatColor: getRandomMassElement(COATCOLOR),
-    eyesColor: getRandomMassElement(EYESCOLOR)
-  }
-];
+var wizards = [];
+
+var createObject = function () {
+  var wizardObject = {
+    name: getRandomMassElement(FIRST_NAME) + ' ' + getRandomMassElement(SECOND_NAME),
+    coatColor: getRandomMassElement(COAT_COLOR),
+    eyesColor: getRandomMassElement(EYES_COLOR)
+  };
+  return wizardObject;
+};
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -53,7 +42,9 @@ var renderWizard = function (wizard) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
+
+for (var i = 0; i < WIZARDS_LENGTH; i++) {
+  wizards[i] = createObject();
   fragment.appendChild(renderWizard(wizards[i]));
 }
 similarListElement.appendChild(fragment);
