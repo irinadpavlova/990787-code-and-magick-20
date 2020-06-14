@@ -54,7 +54,7 @@
     ctx.fillStyle = '#000';
 
     var maxTime = getMaxElement(times);
-    var renderBars = function (times, players) {
+    var renderBars = function () {
       ctx.fillStyle = '#000';
       ctx.fillText(Math.round(times), CLOUD_X + LEFT_GAP + (BAR_GAP + BAR_WIDTH) * i, CLOUD_HEIGHT - BOTTOM_GAP - TEXT_HEIGHT - TEXT_GAP * 2 - (barHeight * times) / maxTime - TEXT_GAP);
       ctx.fillText(players, CLOUD_X + LEFT_GAP + (BAR_GAP + BAR_WIDTH) * i, CLOUD_Y + TOP_GAP + TEXT_HEIGHT + barHeight + TEXT_GAP * 3);

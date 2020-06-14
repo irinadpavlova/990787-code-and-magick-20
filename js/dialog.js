@@ -5,10 +5,8 @@
   var setup = document.querySelector('.setup');
   var setupClose = setup.querySelector('.setup-close');
   var dialogHandle = setup.querySelector('.upload');
-  console.log(setup.style.top);
-  console.log(setup.style.left);
 
-  var onPopupEscPress = function(evt) {
+  var onPopupEscPress = function (evt) {
     window.util.isEscEventNotFocusInput(evt, closePopup);
   };
 
@@ -30,7 +28,7 @@
     openPopup();
   });
 
-  setupOpen.addEventListener('keydown', function(evt) {
+  setupOpen.addEventListener('keydown', function (evt) {
     window.util.isEnterEvent(evt, openPopup);
   });
 
@@ -38,7 +36,7 @@
     closePopup();
   });
 
-  setupClose.addEventListener('keydown', function(evt) {
+  setupClose.addEventListener('keydown', function (evt) {
     window.util.isEnterEvent(evt, closePopup);
   });
 
@@ -80,7 +78,7 @@
       if (dragged) {
         var onClickPreventDefault = function (clickEvt) {
           clickEvt.preventDefault();
-          dialogHandle.removeEventListener('click', onClickPreventDefault)
+          dialogHandle.removeEventListener('click', onClickPreventDefault);
         };
         dialogHandle.addEventListener('click', onClickPreventDefault);
       }

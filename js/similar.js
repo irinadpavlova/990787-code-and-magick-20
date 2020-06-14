@@ -26,8 +26,6 @@
 
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-  var wizards = [];
-
   var createObject = function (firstName, secondName, coatColor, eyesColor) {
     var wizardObjectTmp = {
       name: getRandomMassElement(firstName) + ' ' + getRandomMassElement(secondName),
