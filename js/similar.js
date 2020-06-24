@@ -1,41 +1,58 @@
 'use strict';
 
 (function () {
-  var COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
-  var FIREBALL_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-
-  var WIZARDS_LENGTH = 4;
-
-  window.similar = {
-    coatColor: COAT_COLOR,
-    eyesColor: EYES_COLOR,
-    fierballColor: FIREBALL_COLOR
-  };
+  var coatColor = 'rgb(101, 137, 164)';
+  var eyesColor = 'black';
+  var wizards = [];
   var form = document.querySelector('.setup-wizard-form');
   var setup = document.querySelector('.setup');
 
-  var similarListElement = document.querySelector('.setup-similar-list');
+  var getRank = function (wizard) {
+    var rank = 0;
 
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
 
-  var renderWizard = function (wizard) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
-
-    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
-
-    return wizardElement;
+    return rank;
   };
 
-  var successHandler = function (wizards) {
-    var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < WIZARDS_LENGTH; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+  var namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
     }
-    similarListElement.appendChild(fragment);
+  };
+
+  var updateWizards = function () {
+    window.render(wizards.slice().sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
+  };
+
+  window.wizard.onEyesChange = window.debounce(function (color) {
+    eyesColor = color;
+    updateWizards();
+  });
+
+  window.wizard.onCoatChange = window.debounce(function (color) {
+    coatColor = color;
+    updateWizards();
+  });
+
+  var successHandler = function (data) {
+    wizards = data;
+    updateWizards();
   };
 
   var errorHandler = function (errorMessage) {
@@ -58,4 +75,5 @@
     }, errorHandler);
     evt.preventDefault();
   });
+
 })();
